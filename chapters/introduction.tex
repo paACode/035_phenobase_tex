@@ -2,9 +2,70 @@
 
 Biophysical crop traits such as above-ground biomass, plant height, and leaf area index are fundamental indicators of plant health, growth status, and yield potential \parencite{li_review_2026}. Monitoring these traits throughout the growing season enables early detection of stress, assessment of fertilization efficiency, and estimation of expected yields, information that is directly relevant for agricultural research, regional food security planning, and evidence-based policy making. Traditionally assessing biophysical crop traits relies on in-situ measurements collected through destructive or non-destructive sampling methods, which are labor-intensive, time-consuming, and spatially limited in their coverage \parencite{kumar_remote_2017}.
 
+
+\subsection{Potential of of UAV-based hyperspectral sensing for plant phenotyping research}
+
 Unmanned Aerial Vehicles (UAVs) equipped with hyperspectral cameras offer a scalable alternative, capturing reflected light across hundreds of spectral bands that encode subtle biochemical and structural properties of vegetation invisible to conventional RGB cameras. Applying crop trait retrieval models to such hyperspectral UAV imagery enables the spatial prediction of key crop traits at field scale, at high resolution, and without physical contact with the plant. These properties have made UAV-based hyperspectral sensing an increasingly central tool in precision agriculture and plant phenotyping research \parencite{li_review_2026}
 
 Crop traits can be retrieved from UAV imagery using different approaches, such as radiative transfer models (RTM), vegetation indices (VIs) and machine learning models.
 RTMs are physics-based models that link crop traits to their spectral signatures. A widely used RTM is PROSAIL \parencite{bhadra_prosail-net_2024,noauthor_eoa-teamprosail_forward_2026, gomez-dans_jgomezdansprosail_2026, jacquemoud_prospect_2009}, which simulates canopy reflectance and stores the corresponding crop traits in a Look-Up Table (LUT). By running the model in inverse mode, users can retrieve specific crop traits by matching measured UAV reflectance against the simulated values in the LUT. VIs are calculated from specific spectral band combinations tied to known plant absorption features. Widely used examples include NDVI and  EVI \parencite{radocaj_state_2023}. These indices serve as spectral proxies for biophysical crop traits, providing interpretable and computationally lightweight estimates directly from reflectance data. Machine learning (ML) models, on the other hand, offer maximum flexibility in their input features; they can make use of raw spectral bands, precomputed VIs, retrieved crop traits  or a combination of all three. This allows them to capture complex, non-linear relationships, that VIs fail to resolve 
 
 While VIs are widely used for their simplicity and reliability, machine learning models are attracting growing interest due to their potential to outperform traditional indices. This is particularly true when models are applied across diverse crop types, varying environmental conditions, or to estimate traits with no well-established spectral proxy. \parencite{kumar_remote_2017}).
+
+
+\subsection{UAV-based hyperspectral sensing at Agroscope}
+Recognising the high potential of UAV-based hyperspectral sensing for plant phenotyping research, Agroscope invested in a dedicated drone-based research infrastructure \parencite{noauthor_drone-based_nodate} equipped with hyperspectral cameras. A first year of data acquisition and interpretation \parencite{schneider_retrieval_2026} conducted in 2025 demonstrated the technical capabilities of this infrastructure and confirmed its scientific value for crop trait retrieval at field scale.
+
+At the same time, this revealed that transforming raw hyperspectral UAV data into analysis ready information on  crop traits is a complex, labour-intensive, and time-consuming multi-step workflow, involving a sequence of specialised software tools each requiring manual configuration at every processing step \parencite{schneider_retrieval_2026}. This means that preprocessing a single flight mission can take up to eight hours of a crop researcher's time, and the volume of manual settings makes it practically impossible to guarantee that the same processing steps are applied consistently across different experiments, campaigns, or researchers.
+
+This represents a real bottleneck that currently limits Agroscope's capabilities of developing crop trait retrieval models at scale. In response, the Drone Pipeline Automation project \parencite{noauthor_eoa-team026_dpa_2026} was launched in October 2025, with the goal of automating the whole preprocessing workflow in a data pipeline. 
+
+However, even after automating the preprocessing workflow, a critical challenge remains. As UAV-based field experiments grow in number and complexity, Agroscope lacks a dedicated platform to organise the increasing volume of incoming data and standardise how crop trait retrieval models are developed and shared across crop researchers. This gap forms the direct motivation for the work presented in this thesis.
+
+
+
+\subsection{Problem Statement}
+With the Drone Pipeline Automation project addressing the preprocessing bottleneck, the remaining critical challenge is the absence of a dedicated data platform at Agroscope, which should solve seven key challenges.
+
+\paragraph{P1 -- Fragmented Data Storage and No Common Standard} The first research campaign \parencite{schneider_retrieval_2026} showed that even after a single experiment, data becomes scattered across local IT infrastructure, accessible in practice only to the crop researcher directly involved. No central overview exists of which field experiments have been conducted, when they took place, or what scientific objectives they pursued. In-situ measurements, field designs, and associated metadata are stored inconsistently, with no common standard to enable reuse across the team.
+
+\paragraph{P2 -- Manual Training Dataset Creation} Extracting training datasets by combining reflectance/radiance orthomosaics with experimental design polygons is a high-effort, error-prone process that every researcher repeats independently from scratch for each new experiment. The absence of automation represents a significant source of avoidable overhead.
+
+\paragraph{P3 -- No Queryable Data} Without a data platform, researchers cannot easily query data across growing stages, plot locations, or crop types. Each new analysis requires writing new scripts from scratch, making exploratory data analysis slow and dependent on individual technical skills rather than shared infrastructure.
+
+\paragraph{P4 -- Lack of Cross-Experiment Analysis} Even when data is available, there is no shared data platform that allows systematic comparison across experiments. Potentially valuable insights remain out of reach simply because the infrastructure to combine and analyse existing data does not exist.
+
+\paragraph{P5 -- No Model Registry} Trained models are not stored in a shared data platform. There is no consistent way to record which results (aggregated crop traits) were produced by which model, with which parameters, or on which data, making it impossible to reliably reproduce or compare results across researchers or experiments. Without this, comparing model outputs across experiments is unreliable, and building on previous work requires substantial manual reconstruction of context that should have been recorded from the start.
+\paragraph{P6 -- No Inference Pipeline } Newly trained crop trait models should be used to produce pixelwise crop trait orthomosaics on existing and new data. Without a dedicated inference pipeline, these outputs are not persisted and cannot be fed back into the data platform, blocking iterative model improvement. 
+
+Together, these six gaps make clear that well-documented, findable, and reusable data and models are not optional as Agroscope scales its hyperspectral research programme. They are a prerequisite for rigorous crop trait retrieval research.
+
+\clearpage
+
+\subsection{Research Questions}
+
+\vspace{1em} 
+\noindent
+\begin{tabularx}{\textwidth}{@{\hskip -0.1cm} p{1.2cm} p{4.2cm} X @{}}
+\toprule
+% Hauptfrage erstreckt sich über die gesamte Breite der tabularx-Tabelle
+\multicolumn{3}{@{\hskip -0.1cm} p{\linewidth} @{}}{\textbf{How can a data platform be designed and implemented to enable crop researchers at Agroscope to efficiently develop and evaluate crop trait retrieval models from UAV hyperspectral imagery across field experiment regions of interest and growth stages?}} \\
+\midrule
+\textbf{ID} & \textbf{Stage} & \textbf{Research Question} \\
+\midrule
+\textbf{RQ1} & Req. Engineering & What are the key requirements from a crop researcher on the data platform? \\
+\addlinespace
+\textbf{RQ2} & Design & How can a data platform be designed on top of the existing IT infrastructure that minimizes operational overhead for crop researchers, integrates seamlessly into their established workflows, and remains flexible for future adaptation? \\
+\addlinespace
+\textbf{RQ3} & Implementation & Which technology stack best supports the implementation of the designed data platform in line with current state-of-the-art practices in research data management? \\
+\addlinespace
+\textbf{RQ4} & Validation (Case Study) & To what extent does the designed data platform support a crop researcher in conducting an end-to-end crop trait retrieval workflow, spanning from querying available metadata, fetching training data, and registering a new crop trait recipe, through triggering inference, to retrieving and comparing crop trait estimates across models? This is demonstrated by integrating different crop trait retrieval algorithm recipes based on i) the physics-based ProSail RTM inversion model and ii) vegetation index-based crop trait recipes (GnyLi, NDRedEdge) for retrieving leaf area index and biomass. \\
+\bottomrule
+\end{tabularx}
+\vspace{1.5em}
+
+
+
+
+
+
