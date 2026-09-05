@@ -21,22 +21,12 @@
 \keywords{UAV, Croptrait, Hyperspectral} 
 
 \begin{document}
-\maketitle % This tells LaTeX to make the title page
-
-Biophysical crop traits such as above-ground biomass, plant height, and leaf area index are fundamental indicators of plant health, growth status, and yield potential . Monitoring these traits throughout the growing season enables early detection of stress, assessment of fertilization efficiency, and estimation of expected yields, information that is directly relevant for agricultural research, regional food security planning, and evidence-based policy making. Traditionally assessing biophysical crop traits relies on in-situ measurements collected through destructive or non-destructive sampling methods, which are labor-intensive, time-consuming, and spatially limited in their coverage (Kumar \& Mutanga, 2017).
-
-Unmanned Aerial Vehicles (UAVs) equipped with hyperspectral cameras offer a scalable alternative, capturing reflected light across hundreds of spectral bands that encode subtle biochemical and structural properties of vegetation invisible to conventional RGB cameras. Applying crop trait retrieval models to such hyperspectral UAV imagery enables the spatial prediction of key crop traits at field scale, at high resolution, and without physical contact with the plant. These properties have made UAV-based hyperspectral sensing an increasingly central tool in precision agriculture and plant phenotyping research (Li et al., 2026).
-
-Crop traits can be retrieved from UAV imagery using different approaches, such as radiative transfer models (RTM), vegetation indices (VIs) and machine learning models.
-RTMs are physics-based models that link crop traits to their spectral signatures. A widely used RTM is PROSAIL (Bhadra et al., 2024; EOA-team, 2024/2026; Gómez-Dans, 2012/2026; Jacquemoud et al., 2009), which simulates canopy reflectance and stores the corresponding crop traits in a Look-Up Table (LUT). By running the model in inverse mode, users can retrieve specific crop traits by matching measured UAV reflectance against the simulated values in the LUT. VIs are calculated from specific spectral band combinations tied to known plant absorption features. Widely used examples include NDVI and  EVI (Radočaj et al., 2023). These indices serve as spectral proxies for biophysical crop traits, providing interpretable and computationally lightweight estimates directly from reflectance data. Machine learning (ML) models, on the other hand, offer maximum flexibility in their input features; they can make use of raw spectral bands, precomputed VIs, retrieved crop traits  or a combination of all three. This allows them to capture complex, non-linear relationships, that VIs fail to resolve 
-
-While VIs are widely used for their simplicity and reliability, machine learning models are attracting growing interest due to their potential to outperform traditional indices. This is particularly true when models are applied across diverse crop types, varying environmental conditions, or to estimate traits with no well-established spectral proxy. (Kumar & Mutanga, 2017).
 
 
-Introductory text goes here. A wild example parenthetical reference appears \parencite{Contributor2023}, followed by an in-text sample citation by \textcite{FullBook2021}.
+\input{chapters/introduction} 
 
-Note that paragraphs are separated by a blank line in the editor. If you do not do this, it will continue as a single paragraph.
-This line is \textit{technically} on a new line in the editor, but will print in the same paragraph.
+
+
 
 \section{Introduction}
 
